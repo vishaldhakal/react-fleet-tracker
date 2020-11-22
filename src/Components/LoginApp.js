@@ -6,6 +6,7 @@ import config from "./../config";
 import { useHistory } from "react-router-dom";
 
 function LoginApp() {
+  const [loginerror, setLoginerror] = useState("");
   const history = useHistory();
   const [credentials, setcredentials] = useState({
     email: "",
@@ -33,12 +34,21 @@ function LoginApp() {
       headers: { "Content-Type": "text/plain" },
       data: payload,
     };
-    axios(configg).then((res) => {
-      console.log(res);
-      console.log(res.data.access_token);
-      localStorage.setItem("token", res.data.access_token);
-      history.push("/home");
-    });
+    axios(configg)
+      .then((res) => {
+        console.log(res.data.access_token);
+        localStorage.setItem("token", res.data.access_token);
+        localStorage.setItem("company_name", res.data.companyName);
+        localStorage.setItem("role", res.data.role);
+        localStorage.setItem("refresh_token", res.data.refresh_token);
+        history.push("/home");
+      })
+      .catch(function (error) {
+        console.log(error.response.status);
+        if (error.response.status === 401) {
+          setLoginerror("Username or Password Incorrect");
+        }
+      });
     e.preventDefault();
   };
 
@@ -56,6 +66,7 @@ function LoginApp() {
           <div className="col just p-5">
             <div className="container bg-light shadow-sm rounded p-5">
               <h1>Login</h1>
+              <div className="my-box">{loginerror}</div>
               <form action="">
                 <div className="mb-3">
                   <label htmlFor="email" className="form-label">

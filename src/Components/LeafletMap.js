@@ -1,4 +1,24 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import axios from "axios";
+import config from "./../config";
+
+const token = localStorage.getItem("token");
+var configg = {
+  method: "get",
+  credentials: "include",
+  url: `${config.baseUrl}/all-vehicle-last-position-with-details`,
+  headers: {
+    "Content-Type": "text/plain",
+    Authorization: `Bearer ${token}`,
+  },
+};
+axios(configg)
+  .then((res) => {
+    console.log(res.data);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
 
 function LeafletMap() {
   let center_position = [27.6664, 85.2904];

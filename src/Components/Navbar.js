@@ -1,6 +1,18 @@
-/* import { Link } from "react-router-dom"; */
+import { useHistory } from "react-router-dom";
 
 function Navbar() {
+  const company_name = localStorage.getItem("company_name");
+  const history = useHistory();
+  const handleLogout = (e) => {
+    alert("Logged Out Succesfully!");
+    const keys_to_remove = ["token", "refresh_token", "role", "company_name"];
+    keys_to_remove.forEach((element) => {
+      localStorage.removeItem(element);
+    });
+
+    history.push("/login");
+  };
+
   return (
     <>
       <div className="row my-bg2 py-2 text-light">
@@ -8,11 +20,13 @@ function Navbar() {
       </div>
       <div className="row pt-3 px-5">
         <h5 className="text-center font-weight-bold text-light">
-          Company Name
+          {company_name}
         </h5>
       </div>
       <div className="row py-2 px-5 mb-5">
-        <button className="btn btn-light">Logout</button>
+        <button className="btn btn-light" onClick={handleLogout}>
+          Logout
+        </button>
       </div>
       <div className="row my-bg2 py-4 text-light">
         <h4 className="text-center">Status</h4>
