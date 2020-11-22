@@ -1,12 +1,5 @@
-import LoginApp from "./Components/LoginApp";
-import Home from "./Components/Home";
-
-function App() {
-  return (
-    <>
-      <LoginApp />
-    </>
-  );
+function App(props) {
+  return <>{props.children}</>;
 }
 
 export default App;

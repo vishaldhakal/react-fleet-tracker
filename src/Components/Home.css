@@ -2,9 +2,14 @@
   height: 100vh;
 }
 
-.my-bg {
-  background-color: #764abc;
+.my-bg1 {
+  background-color: #440b5d;
 }
+
+.my-bg2 {
+  background-color: #5c0b80;
+}
+
 .text-mine {
   color: #764abc;
 }

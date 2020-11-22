@@ -2,6 +2,7 @@ import "./LoginApp.css";
 import TrackingGif from "./../assests/tracking.gif";
 import { useState } from "react";
 import axios from "axios";
+import config from "./../config";
 
 function LoginApp() {
   const [credentials, setcredentials] = useState({
@@ -19,12 +20,11 @@ function LoginApp() {
   };
 
   const handleSubmit = (e) => {
-    /* http://167.71.225.146:8080/login */
     const payload = JSON.stringify({
       email: credentials.email,
       password: credentials.password,
     });
-    axios.post("http://167.71.225.146:8080/login", { payload }).then((res) => {
+    axios.post(`${config.baseUrl}/login`, { payload }).then((res) => {
       console.log(res);
       console.log(res.data);
     });

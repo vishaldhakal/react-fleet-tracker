@@ -6,7 +6,7 @@ function Home() {
   return (
     <>
       <div className="row row-cols-1 row-cols-md-2">
-        <div className="col-md-3 bg-light">
+        <div className="col-md-3 my-bg1">
           <Navbar />
         </div>
         <div className="col-md-9">
