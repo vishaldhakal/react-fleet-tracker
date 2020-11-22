@@ -24,9 +24,16 @@ function LoginApp() {
       email: credentials.email,
       password: credentials.password,
     });
-    axios.post(`${config.baseUrl}/login`, { payload }).then((res) => {
+    var configg = {
+      method: "POST",
+      credentials: "include",
+      url: `${config.baseUrl}/login`,
+      headers: { "Content-Type": "text/plain" },
+      data: payload,
+    };
+    axios(configg).then((res) => {
       console.log(res);
-      console.log(res.data);
+      console.log(res.data.access_token);
     });
     e.preventDefault();
   };
