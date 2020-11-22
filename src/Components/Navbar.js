@@ -45,7 +45,7 @@ function Navbar() {
         <h4 className="px-5">Dashboard</h4>
       </div>
       <div className="row my-bg py-2 text-light border-bottom">
-        <h4 className="px-5">Add Device</h4>
+        <h4 className="px-5">Devices</h4>
       </div>
       <div className="row my-bg py-2 text-light border-bottom">
         <h4 className="px-5">Reports</h4>
