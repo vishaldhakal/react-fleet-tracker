@@ -3,8 +3,10 @@ import TrackingGif from "./../assests/tracking.gif";
 import { useState } from "react";
 import axios from "axios";
 import config from "./../config";
+import { useHistory } from "react-router-dom";
 
 function LoginApp() {
+  const history = useHistory();
   const [credentials, setcredentials] = useState({
     email: "",
     password: "",
@@ -34,6 +36,8 @@ function LoginApp() {
     axios(configg).then((res) => {
       console.log(res);
       console.log(res.data.access_token);
+      localStorage.setItem("token", res.data.access_token);
+      history.push("/home");
     });
     e.preventDefault();
   };
