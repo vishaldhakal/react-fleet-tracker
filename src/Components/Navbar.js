@@ -1,4 +1,8 @@
 import { useHistory } from "react-router-dom";
+import DashboardIcon from "./../assests/dashboard.png";
+import ReportIcon from "./../assests/reports.png";
+import DeviceIcon from "./../assests/device.png";
+import AccountIcon from "./../assests/account.png";
 
 function Navbar() {
   const company_name = localStorage.getItem("company_name");
@@ -15,51 +19,83 @@ function Navbar() {
 
   return (
     <>
-      <div className="row my-bg2 py-2 text-light">
+      <div className="row title-bg py-2 text-light">
         <h4 className="text-center">Fleet Tracker</h4>
       </div>
-      <div className="row pt-3 px-5">
-        <h5 className="text-center font-weight-bold text-light">
-          {company_name}
-        </h5>
-      </div>
-      <div className="row py-2 px-5 mb-5">
-        <button className="btn btn-light" onClick={handleLogout}>
+      <div className="row py-2 px-5 mb-2">
+        <button className="btn btn-outline-danger" onClick={handleLogout}>
           Logout
         </button>
       </div>
-      <div className="row my-bg2 py-4 text-light">
-        <h4 className="text-center">Status</h4>
-        <div className="row row-cols-2 py-2 px-5 mx-2">
-          <div className="col text-center text-dark bg-light p-3 rounded-left">
-            <h1 className="font-weight-bold">2</h1>
-            <h4 className="badge bg-success">Online</h4>
-          </div>
-          <div className="col text-center text-dark bg-light p-3 rounded-right">
-            <h1 className="font-weight-bold">0</h1>
-            <h4 className="badge bg-danger">Offline</h4>
-          </div>
+      <div className="row my-bg1 py-2 px-5">
+        <h4 className="text-dark">{company_name}</h4>
+      </div>
+      <div className="row row-cols-2 text-dark px-5 pt-4">
+        <div className="col my-bg2 py-2 text-left">
+          <h5 className="myshad">Online</h5>
+        </div>
+        <div className="col my-bg2 py-2 text-right">
+          <span className="badge bg-white text-success ml-2"> 0</span>
         </div>
       </div>
-      <div className="row my-bg py-2 text-light border-bottom">
-        <h4 className="px-5">Dashboard</h4>
+      <div className="row row-cols-2 text-dark px-5 pt-2">
+        <div className="col my-bg2 py-2 text-left">
+          <h5 className="myshad">Offline</h5>
+        </div>
+        <div className="col my-bg2 py-2 text-right">
+          <span className="badge bg-white text-danger ml-2"> 0</span>
+        </div>
       </div>
-      <div className="row my-bg py-2 text-light border-bottom">
-        <h4 className="px-5">Devices</h4>
+      <div className="row text-dark mt-5 px-5">
+        <h6 className="my-bg1 active py-2 myshad">
+          <img
+            src={DashboardIcon}
+            alt="dashboard-icon"
+            className="img-fluid mr-2"
+          />
+          Dashboard
+        </h6>
       </div>
-      <div className="row my-bg py-2 text-light border-bottom">
-        <h4 className="px-5">Reports</h4>
+      <div className="row text-dark mt-1 px-5">
+        <h6 className="my-bg1 py-2 myshad">
+          <img
+            src={DeviceIcon}
+            alt="dashboard-icon"
+            className="img-fluid mr-2"
+          />
+          Device
+        </h6>
       </div>
-      <div className="row my-bg py-2 text-light">
-        <h4 className="px-5">Settings</h4>
+      <div className="row text-dark mt-1 px-5">
+        <h6 className="my-bg1 py-2 myshad">
+          <img
+            src={ReportIcon}
+            alt="dashboard-icon"
+            className="img-fluid mr-2"
+          />
+          Report
+        </h6>
       </div>
-      <div className="row py-4 text-light my-bg2">
-        <h4 className="px-5 text-light">Contact : </h4>
-        <a className="px-5 text-light" href="mailto:hello@smartlabnepal.com">
+      <div className="row text-dark mt-1 px-5">
+        <h6 className="my-bg1 py-2 myshad">
+          <img
+            src={AccountIcon}
+            alt="dashboard-icon"
+            className="img-fluid mr-2"
+          />
+          Account
+        </h6>
+      </div>
+      <div className="row py-4">
+        <h4 className="px-5 text-dark">Contact : </h4>
+        <a
+          className="px-5 text-secondary"
+          href="mailto:hello@smartlabnepal.com"
+        >
           hello@smartlabnepal.com
         </a>
-        <a className="px-5 text-light" href="https://smartlabnepal.com/contact">
-          Smartlab Nepal - Research & Development
+        <a className="px-5 text-secondary" href="tel:98xxxxxxxx">
+          98xxxxxxxx
         </a>
       </div>
     </>

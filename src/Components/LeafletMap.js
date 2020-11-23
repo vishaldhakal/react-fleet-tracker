@@ -1,8 +1,9 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { useState } from "react";
-/* import axios from "axios";
+import axios from "axios";
 import config from "./../config";
 
+let my_server_data = [];
 const token = localStorage.getItem("token");
 var configg = {
   method: "get",
@@ -16,30 +17,11 @@ var configg = {
 axios(configg)
   .then((res) => {
     console.log(res.data);
+    my_server_data = res.data;
   })
   .catch(function (error) {
     console.log(error);
   });
- */
-
-let my_server_data = [
-  {
-    fleetName: "ABC",
-    fleetIMEINumber: "123457046934352",
-    PhoneNumber: "9866316116",
-    fleetModel: "Ford",
-    longitude: "27.6664",
-    latitude: "85.4904",
-  },
-  {
-    fleetName: "ABC2",
-    fleetIMEINumber: "303030303030303",
-    PhoneNumber: "98663161167",
-    fleetModel: "Fordd",
-    longitude: "27.7664",
-    latitude: "85.4904",
-  },
-];
 
 function convertIMEI(strr) {
   var n = "02" + strr.slice(5);
@@ -50,7 +32,6 @@ function convertIMEI(strr) {
 function LeafletMap() {
   const [markings, setMarkings] = useState(my_server_data);
   let center_position = [27.6664, 85.2904];
-  console.log(markings);
 
   const socket = new WebSocket("ws://167.71.225.146:3000");
 
@@ -71,13 +52,21 @@ function LeafletMap() {
   socket.addEventListener("message", function (event) {
     var json_response = JSON.parse(event.data);
     console.log(json_response);
-    /* markings.forEach(mark => {
-      if (convertIMEI(mark.fleetIMEINumber) === json_response.deviceID ) {
-        setMarkings({
-
-        })
+    markings.forEach((mark) => {
+      if (convertIMEI(mark.fleetIMEINumber) === json_response.deviceID) {
+        setMarkings(
+          markings.map((item) =>
+            item.fleetIMEINumber === mark.fleetIMEINumber
+              ? {
+                  ...item,
+                  longitude: json_response.longitude,
+                  latitude: json_response.latitude,
+                }
+              : item
+          )
+        );
       }
-    }); */
+    });
   });
 
   return (
@@ -90,8 +79,8 @@ function LeafletMap() {
           />
           {markings.map((mark, index) => (
             <Marker
-              position={[mark.longitude, mark.latitude]}
-              key={mark.fleetName}
+              position={[mark.latitude, mark.longitude]}
+              key={mark.fleetIMEINumber}
             >
               <Popup>{mark.fleetIMEINumber}</Popup>
             </Marker>

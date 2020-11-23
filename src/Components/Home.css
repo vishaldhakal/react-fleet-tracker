@@ -1,15 +1,27 @@
 .leaflet-container {
   height: 100vh;
 }
-
+.title-bg {
+  background-color: #113064;
+}
+.active {
+  border: #6ca2ff solid 1px;
+}
 .my-bg1 {
-  background-color: #440b5d;
+  background-color: #f8fbff;
 }
 
 .my-bg2 {
-  background-color: #5c0b80;
+  background-color: #fafafa;
 }
-
-.text-mine {
-  color: #764abc;
+.row.no-pad {
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+}
+.row.no-pad > [class*="col-"] {
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+}
+.myshad {
+  border-radius: 5px;
 }
