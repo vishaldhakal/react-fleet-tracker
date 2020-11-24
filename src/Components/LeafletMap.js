@@ -10,6 +10,11 @@ import L from "leaflet";
 import axios from "axios";
 import config from "./../config";
 
+let my_random_data = [
+  [27.666997, 85.290863],
+  [27.766997, 85.290863],
+];
+
 function LeafletMap() {
   const [markings, setMarkings] = useState(null);
   const [center_position, setCenterPosition] = useState([27.666997, 85.290863]);
@@ -84,11 +89,14 @@ function LeafletMap() {
       };
       axios(configgg)
         .then((res) => {
-          console.log(res.data);
-          if (res.data != null) {
+          console.log(res.status);
+          if (res.status != 204) {
             setSinglemarkerdata(res.data);
+          } else {
+            setSinglemarkerdata(my_random_data);
+            console.log("Setting random data");
+            /* setSinglemarkerdatanot(singlemarker); */
           }
-          setSinglemarkerdatanot(singlemarker);
         })
         .catch(function (error) {
           console.log(error);

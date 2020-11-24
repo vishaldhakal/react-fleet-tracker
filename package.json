@@ -13,12 +13,10 @@
     "axios": "^0.21.0",
     "bootstrap": "^5.0.0-alpha3",
     "leaflet": "^1.7.1",
-    "leaflet-ant-path": "^1.3.0",
     "popper.js": "^1.14.3",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-leaflet": "^3.0.2",
-    "react-leaflet-ant-path": "^1.1.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.0",
     "web-vitals": "^0.2.4"
