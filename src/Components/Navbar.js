@@ -1,4 +1,4 @@
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import DashboardIcon from "./../assests/dashboard.png";
 import ReportIcon from "./../assests/reports.png";
 import DeviceIcon from "./../assests/device.png";
@@ -22,13 +22,9 @@ function Navbar() {
       <div className="row title-bg py-2 text-light">
         <h4 className="text-center">Fleet Tracker</h4>
       </div>
-      <div className="row py-2 px-5 mb-2">
-        <button className="btn btn-outline-danger" onClick={handleLogout}>
-          Logout
-        </button>
-      </div>
+
       <div className="row my-bg1 py-2 px-5">
-        <h4 className="text-dark">{company_name}</h4>
+        <h5 className="text-dark">{company_name}</h5>
       </div>
       <div className="row row-cols-2 text-dark px-5 pt-4">
         <div className="col my-bg2 py-2 text-left">
@@ -46,25 +42,35 @@ function Navbar() {
           <span className="badge bg-white text-danger ml-2"> 0</span>
         </div>
       </div>
-      <div className="row text-dark mt-5 px-5">
-        <h6 className="my-bg1 active py-2 myshad">
-          <img
-            src={DashboardIcon}
-            alt="dashboard-icon"
-            className="img-fluid mr-2"
-          />
-          Dashboard
-        </h6>
+      <div className="row text-dark mt-5">
+        <a
+          href="/home"
+          onClick={() => {
+            window.location.href = "/home";
+          }}
+          className="text-dark px-5 text-decoration-none"
+        >
+          <h6 className="my-bg1 py-2 myshad">
+            <img
+              src={DashboardIcon}
+              alt="dashboard-icon"
+              className="img-fluid mr-2"
+            />
+            Dashboard
+          </h6>
+        </a>
       </div>
-      <div className="row text-dark mt-1 px-5">
-        <h6 className="my-bg1 py-2 myshad">
-          <img
-            src={DeviceIcon}
-            alt="dashboard-icon"
-            className="img-fluid mr-2"
-          />
-          Device
-        </h6>
+      <div className="row text-dark mt-1">
+        <Link to="/device" className="text-dark px-5 text-decoration-none">
+          <h6 className="my-bg1 py-2 myshad px-2">
+            <img
+              src={DeviceIcon}
+              alt="dashboard-icon"
+              className="img-fluid mr-2"
+            />
+            Device
+          </h6>
+        </Link>
       </div>
       <div className="row text-dark mt-1 px-5">
         <h6 className="my-bg1 py-2 myshad">
@@ -86,6 +92,7 @@ function Navbar() {
           Account
         </h6>
       </div>
+      <div className="row py-2 px-5 mb-2"></div>
       <div className="row py-4">
         <h4 className="px-5 text-dark">Contact : </h4>
         <a
@@ -94,9 +101,14 @@ function Navbar() {
         >
           hello@smartlabnepal.com
         </a>
-        <a className="px-5 text-secondary" href="tel:98xxxxxxxx">
-          98xxxxxxxx
+        <a className="px-5 text-secondary" href="tel:+977 986 322 9297">
+          9863229297
         </a>
+      </div>
+      <div className="row py-2 px-5 mb-2">
+        <button className="btn btn-outline-danger" onClick={handleLogout}>
+          Logout
+        </button>
       </div>
     </>
   );

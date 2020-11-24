@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import Login from "./Components/LoginApp";
 import Home from "./Components/Home";
+import Device from "./Components/Device";
 import NotFound from "./Components/Notfound";
 
 const authGuard = (Component) => () => {
@@ -20,13 +21,13 @@ function Routes(props) {
   return (
     <Router {...props}>
       <Switch>
-        <Route path="/login">
+        <Route exact path="/login">
           <Login />
         </Route>
-        <Route path="/myhome">
-          <Home />
+        <Route exact path="/device">
+          <Device />
         </Route>
-        <Route path="/home" render={authGuard(Home)} />
+        <Route exact path="/home" render={authGuard(Home)} />
         <Route exact path="/">
           <Redirect to="/home" />
         </Route>
