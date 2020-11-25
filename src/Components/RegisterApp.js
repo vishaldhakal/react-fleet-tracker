@@ -6,11 +6,14 @@ import config from "./../config";
 import { useHistory, Link } from "react-router-dom";
 
 function LoginApp() {
-  const [loginerror, setLoginerror] = useState("");
+  const [registererror, setRegistererror] = useState("");
   const history = useHistory();
   const [credentials, setcredentials] = useState({
+    companyName: "",
     email: "",
     password: "",
+    phone: "",
+    role: "",
   });
 
   const handleChange = (e) => {
@@ -24,34 +27,34 @@ function LoginApp() {
 
   const handleSubmit = (e) => {
     const payload = JSON.stringify({
+      companyName: credentials.companyName,
       email: credentials.email,
       password: credentials.password,
+      phone: credentials.phone,
+      role: credentials.role,
     });
     var configg = {
       method: "POST",
       credentials: "include",
-      url: `${config.baseUrl}/login`,
+      url: `${config.baseUrl}/register`,
       headers: { "Content-Type": "text/plain" },
       data: payload,
     };
     axios(configg)
       .then((res) => {
-        console.log(res.data.access_token);
-        localStorage.setItem("token", res.data.access_token);
-        localStorage.setItem("company_name", res.data.companyName);
-        localStorage.setItem("role", res.data.role);
-        localStorage.setItem("refresh_token", res.data.refresh_token);
-        history.push("/home");
+        if (res.status === 200) {
+          console.log(res.data);
+          localStorage.setItem("token", res.data.access_token);
+          localStorage.setItem("company_name", res.data.companyName);
+          localStorage.setItem("role", res.data.role);
+          localStorage.setItem("refresh_token", res.data.refresh_token);
+          history.push("/home");
+        } else {
+          setRegistererror(res.statusText);
+        }
       })
       .catch(function (error) {
         console.log(error.response.status);
-        if (error.response.status === 401) {
-          setLoginerror("Email or Password Incorrect");
-        } else if (error.response.status === 404) {
-          setLoginerror("Email or Password Doesnot Exists");
-        } else {
-          setLoginerror("Email or Password Incorrect");
-        }
       });
     e.preventDefault();
   };
@@ -70,8 +73,22 @@ function LoginApp() {
           <div className="col just p-5">
             <div className="container bg-light shadow-sm rounded p-5">
               <h1>Login</h1>
-              <div className="my-box">{loginerror}</div>
+              <div className="my-box">{registererror}</div>
               <form action="">
+                <div className="mb-3">
+                  <label htmlFor="companyName" className="form-label">
+                    Enter Company Name:
+                  </label>
+                  <input
+                    type="text"
+                    name="companyName"
+                    id="companyName"
+                    className="form-control"
+                    value={credentials.companyName}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
                 <div className="mb-3">
                   <label htmlFor="email" className="form-label">
                     Enter Email:
@@ -100,17 +117,45 @@ function LoginApp() {
                     required
                   />
                 </div>
+                <div className="mb-3">
+                  <label htmlFor="phone" className="form-label">
+                    Enter Phone Number:
+                  </label>
+                  <input
+                    type="text"
+                    name="phone"
+                    id="phone"
+                    className="form-control"
+                    value={credentials.phone}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="role" className="form-label">
+                    Enter Your Role:
+                  </label>
+                  <input
+                    type="text"
+                    name="role"
+                    id="role"
+                    className="form-control"
+                    value={credentials.role}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
                 <input
                   type="submit"
                   className="btn d-block btn-success"
-                  value="Login"
+                  value="Register Now"
                   onClick={handleSubmit}
                 ></input>
               </form>
               <p className="text-secondary pt-5">
-                Don't have an account ?{" "}
-                <Link to="/register" className="text-primary">
-                  Register Now
+                Already have an account ?{" "}
+                <Link to="/login" className="text-primary">
+                  Login Now
                 </Link>
               </p>
             </div>

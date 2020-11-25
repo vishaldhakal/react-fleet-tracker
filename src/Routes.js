@@ -5,6 +5,7 @@ import {
   Redirect,
 } from "react-router-dom";
 import Login from "./Components/LoginApp";
+import Register from "./Components/RegisterApp";
 import Home from "./Components/Home";
 import Device from "./Components/Device";
 import NotFound from "./Components/Notfound";
@@ -24,9 +25,10 @@ function Routes(props) {
         <Route exact path="/login">
           <Login />
         </Route>
-        <Route exact path="/device">
-          <Device />
+        <Route exact path="/register">
+          <Register />
         </Route>
+        <Route exact path="/device" render={authGuard(Device)} />
         <Route exact path="/home" render={authGuard(Home)} />
         <Route exact path="/">
           <Redirect to="/home" />

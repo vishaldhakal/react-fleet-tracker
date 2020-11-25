@@ -92,7 +92,12 @@ function Navbar() {
           Account
         </h6>
       </div>
-      <div className="row py-2 px-5 mb-2"></div>
+      <div className="row py-4 px-5 mb-2"></div>
+      <div className="row py-2 px-5 mb-2">
+        <button className="btn btn-outline-danger" onClick={handleLogout}>
+          Logout
+        </button>
+      </div>
       <div className="row py-4">
         <h4 className="px-5 text-dark">Contact : </h4>
         <a
@@ -104,11 +109,6 @@ function Navbar() {
         <a className="px-5 text-secondary" href="tel:+977 986 322 9297">
           9863229297
         </a>
-      </div>
-      <div className="row py-2 px-5 mb-2">
-        <button className="btn btn-outline-danger" onClick={handleLogout}>
-          Logout
-        </button>
       </div>
     </>
   );

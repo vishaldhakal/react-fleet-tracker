@@ -10,10 +10,10 @@ import L from "leaflet";
 import axios from "axios";
 import config from "./../config";
 
-let my_random_data = [
+/* let my_random_data = [
   [27.666997, 85.290863],
-  [27.766997, 85.290863],
-];
+  [27.677998, 85.290863],
+]; */
 
 function LeafletMap() {
   const [markings, setMarkings] = useState(null);
@@ -67,13 +67,28 @@ function LeafletMap() {
       axios(configg)
         .then((res) => {
           console.log(res.data);
-          setMarkings(res.data);
+          if (res.status === 200) {
+            setMarkings(res.data);
+          } else {
+            const keys_to_remove = [
+              "token",
+              "refresh_token",
+              "role",
+              "company_name",
+            ];
+            keys_to_remove.forEach((element) => {
+              localStorage.removeItem(element);
+            });
+          }
         })
         .catch(function (error) {
           console.log(error);
         });
     } else {
       const token = localStorage.getItem("token");
+      var today = new Date();
+      const mystr =
+        today.getFullYear() + "-" + today.getMonth() + "-" + today.getDate();
       var configgg = {
         method: "get",
         credentials: "include",
@@ -81,7 +96,7 @@ function LeafletMap() {
           config.baseUrl
         }/one-vehicle-daily-history?vehicleID=${convertIMEI(
           singlemarker.fleetIMEINumber
-        )}&date=2020-10-20`,
+        )}&date=${mystr}`,
         headers: {
           "Content-Type": "text/plain",
           Authorization: `Bearer ${token}`,
@@ -89,19 +104,23 @@ function LeafletMap() {
       };
       axios(configgg)
         .then((res) => {
-          console.log(res.status);
-          if (res.status != 204) {
+          console.log(
+            "Request for single vehicle data response : ",
+            res.status,
+            res
+          );
+          if (res.status !== 204) {
             setSinglemarkerdata(res.data);
           } else {
-            setSinglemarkerdata(my_random_data);
-            console.log("Setting random data");
-            /* setSinglemarkerdatanot(singlemarker); */
+            /* setSinglemarkerdata(my_random_data); */
+            console.log("Setting single Vehicle donot have any data for today");
+            setSinglemarkerdatanot(singlemarker);
           }
         })
         .catch(function (error) {
           console.log(error);
         });
-      console.log("Single data fetching from server");
+      console.log("Single data fetching from server of date : ", mystr);
     }
   }, [singlemarker]);
 
