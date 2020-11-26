@@ -16,6 +16,8 @@ let my_random_data = [
   [27.666997, 85.207873],
   [27.686997, 85.257873],
   [27.688998, 85.290863],
+  [27.666997, 85.207873],
+  [27.688998, 85.290863],
 ];
 
 function MyComponent(props) {
@@ -54,6 +56,8 @@ function LeafletMap() {
         }
       });
       setMarkings(null);
+    } else {
+      alert("Please Select a Vehicle to Search");
     }
     e.preventDefault();
   };
@@ -210,6 +214,26 @@ function LeafletMap() {
     });
   });
 
+  function checkValidity(mymark) {
+    if (mymark.latitude !== "" && mymark.longitude !== "") {
+      return (
+        <option value={mymark.fleetIMEINumber} key={mymark.fleetIMEINumber}>
+          {mymark.fleetName}
+        </option>
+      );
+    } else {
+      return (
+        <option
+          value={mymark.fleetIMEINumber}
+          key={mymark.fleetIMEINumber}
+          disabled={true}
+        >
+          {mymark.fleetName}
+        </option>
+      );
+    }
+  }
+
   return (
     <>
       {markings && (
@@ -228,11 +252,7 @@ function LeafletMap() {
             onChange={handleChange}
           >
             <option>Select a Vehicle</option>
-            {markings.map((mark, index) => (
-              <option value={mark.fleetIMEINumber} key={mark.fleetIMEINumber}>
-                {mark.fleetName}
-              </option>
-            ))}
+            {markings.map((mark, index) => checkValidity(mark))}
           </select>
 
           <input
