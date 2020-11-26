@@ -50,7 +50,7 @@ function Navbar() {
           }}
           className="text-dark px-5 text-decoration-none"
         >
-          <h6 className="my-bg1 py-2 myshad">
+          <h6 className="my-bg1 py-2 myshad haha">
             <img
               src={DashboardIcon}
               alt="dashboard-icon"
@@ -62,7 +62,7 @@ function Navbar() {
       </div>
       <div className="row text-dark mt-1">
         <Link to="/device" className="text-dark px-5 text-decoration-none">
-          <h6 className="my-bg1 py-2 myshad px-2">
+          <h6 className="my-bg1 py-2 myshad px-2 haha">
             <img
               src={DeviceIcon}
               alt="dashboard-icon"
@@ -73,7 +73,7 @@ function Navbar() {
         </Link>
       </div>
       <div className="row text-dark mt-1 px-5">
-        <h6 className="my-bg1 py-2 myshad">
+        <h6 className="my-bg1 py-2 myshad haha">
           <img
             src={ReportIcon}
             alt="dashboard-icon"
@@ -82,15 +82,17 @@ function Navbar() {
           Report
         </h6>
       </div>
-      <div className="row text-dark mt-1 px-5">
-        <h6 className="my-bg1 py-2 myshad">
-          <img
-            src={AccountIcon}
-            alt="dashboard-icon"
-            className="img-fluid mr-2"
-          />
-          Account
-        </h6>
+      <div className="row text-dark mt-1">
+        <Link to="/account" className="text-dark px-5 text-decoration-none">
+          <h6 className="my-bg1 py-2 myshad px-2 haha">
+            <img
+              src={AccountIcon}
+              alt="dashboard-icon"
+              className="img-fluid mr-2"
+            />
+            Account
+          </h6>
+        </Link>
       </div>
       <div className="row py-4 px-5 mb-2"></div>
       <div className="row py-2 px-5 mb-2">

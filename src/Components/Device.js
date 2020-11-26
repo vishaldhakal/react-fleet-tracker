@@ -83,7 +83,7 @@ function DeviceApp() {
           <Navbar />
         </div>
         <div className="col-md-10 bg-light">
-          <div className="conatiner p-5">
+          <div className="conatiner p-1 p-md-5">
             {!mydata && (
               <table className="table bg-white p-5 table-responsive">
                 <thead>

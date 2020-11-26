@@ -8,6 +8,7 @@ import Login from "./Components/LoginApp";
 import Register from "./Components/RegisterApp";
 import Home from "./Components/Home";
 import Device from "./Components/Device";
+import Account from "./Components/Account";
 import NotFound from "./Components/Notfound";
 
 const authGuard = (Component) => () => {
@@ -29,6 +30,7 @@ function Routes(props) {
           <Register />
         </Route>
         <Route exact path="/device" render={authGuard(Device)} />
+        <Route exact path="/account" render={authGuard(Account)} />
         <Route exact path="/home" render={authGuard(Home)} />
         <Route exact path="/">
           <Redirect to="/home" />

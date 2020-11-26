@@ -10,6 +10,9 @@
 .my-bg1 {
   background-color: #f8fbff;
 }
+.haha:hover {
+  background-color: #ebf2ff;
+}
 
 .my-bg2 {
   background-color: #fafafa;
@@ -24,4 +27,44 @@
 }
 .myshad {
   border-radius: 5px;
+}
+.mysearch {
+  display: flex;
+  position: absolute;
+  z-index: 1000;
+  top: 20px;
+  right: 20px;
+}
+.searchinput {
+  border: none;
+  outline: none;
+  padding: 10px 30px;
+  border-radius: 0px;
+}
+.mydateinput {
+  border: none;
+  outline: none;
+  background-color: #f8fbff;
+  border-radius: 0px;
+}
+.mybord {
+  border-radius: 20px 0px 0px 20px;
+}
+.searchinput::focus {
+  outline: none;
+  box-shadow: none;
+  outline: none;
+}
+.searchbtn {
+  border: none;
+  outline: none;
+  border-radius: 0px;
+  background-color: rgb(13, 31, 80);
+  color: white;
+  border-radius: 0px 20px 20px 0px;
+  transition: transform 0.5s ease-in-out;
+}
+.searchbtn:hover {
+  color: white;
+  transform: rotate(360deg);
 }
