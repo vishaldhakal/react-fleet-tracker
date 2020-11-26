@@ -8,14 +8,14 @@
   border: #6ca2ff solid 1px;
 }
 .my-bg1 {
-  background-color: #f8fbff;
+  background-color: #dbebff;
 }
 .haha:hover {
   background-color: #ebf2ff;
 }
 
 .my-bg2 {
-  background-color: #fafafa;
+  background-color: #f0f0f0;
 }
 .row.no-pad {
   margin-right: 0 !important;
@@ -50,10 +50,12 @@
 .mybord {
   border-radius: 20px 0px 0px 20px;
 }
-.searchinput::focus {
-  outline: none;
-  box-shadow: none;
-  outline: none;
+.no-border:focus {
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+  outline: 0;
+  background-color: rgb(221, 255, 248);
 }
 .searchbtn {
   border: none;
@@ -62,9 +64,8 @@
   background-color: rgb(13, 31, 80);
   color: white;
   border-radius: 0px 20px 20px 0px;
-  transition: transform 0.5s ease-in-out;
 }
-.searchbtn:hover {
-  color: white;
-  transform: rotate(360deg);
+.leaflet-tooltip {
+  background-color: rgb(214, 226, 255);
+  color: black;
 }

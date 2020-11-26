@@ -1,5 +1,11 @@
 import Antpath from "./Antpath";
-import { MapContainer, TileLayer, Marker, Tooltip } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Tooltip,
+  useMap,
+} from "react-leaflet";
 import { useState, useEffect } from "react";
 import L from "leaflet";
 import axios from "axios";
@@ -8,9 +14,15 @@ import config from "./../config";
 let my_random_data = [
   [27.666997, 85.290863],
   [27.666997, 85.207873],
-  [27.666997, 85.257873],
+  [27.686997, 85.257873],
   [27.688998, 85.290863],
 ];
+
+function MyComponent(props) {
+  const map = useMap();
+  map.setView(props.centerr);
+  return null;
+}
 
 function LeafletMap() {
   const today = new Date();
@@ -22,10 +34,29 @@ function LeafletMap() {
   const [searchdata, setSearchdata] = useState({
     startingDate:
       today.getFullYear() + "-" + today.getMonth() + "-" + today.getDate(),
-    endingDate:
-      today.getFullYear() + "-" + today.getMonth() + "-" + today.getDate(),
     device: "",
   });
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setSearchdata((prevState) => ({
+      ...prevState,
+      [id]: value,
+    }));
+    console.log(searchdata);
+  };
+
+  const handleSubmit = (e) => {
+    if (searchdata.device !== "") {
+      markings.forEach((element) => {
+        if (element.fleetIMEINumber === searchdata.device) {
+          setSinglemarker(element);
+        }
+      });
+      setMarkings(null);
+    }
+    e.preventDefault();
+  };
 
   const selectIcon = (typee) => {
     let myiconurlSelect;
@@ -40,7 +71,8 @@ function LeafletMap() {
     }
     var myIcon = L.icon({
       iconUrl: myiconurlSelect,
-      iconSize: [100, 95], // size of the icon
+      iconSize: [48, 48], // size of the icon
+      iconAnchor: [20, 15],
     });
     return myIcon;
   };
@@ -59,9 +91,6 @@ function LeafletMap() {
 
   useEffect(() => {
     if (singlemarker == null) {
-      /* let antPolyline = new AntPath(my_random_data, { color: "red" });
-      antPolyline.addTo(context.map); */
-
       const token = localStorage.getItem("token");
       var configg = {
         method: "get",
@@ -95,8 +124,13 @@ function LeafletMap() {
     } else {
       const token = localStorage.getItem("token");
       var today = new Date();
-      const mystr =
-        today.getFullYear() + "-" + today.getMonth() + "-" + today.getDate();
+      let mystr;
+      if (searchdata.device === "") {
+        mystr =
+          today.getFullYear() + "-" + today.getMonth() + "-" + today.getDate();
+      } else {
+        mystr = searchdata.startingDate;
+      }
       var configgg = {
         method: "get",
         credentials: "include",
@@ -123,6 +157,15 @@ function LeafletMap() {
             setSinglemarkerdata(my_random_data);
             console.log("Setting single Vehicle donot have any data for today");
             /* setSinglemarkerdatanot(singlemarker); */
+            if (singlemarker.latitude === "" || singlemarker.longitude === "") {
+              setCenterPosition([0, 0]);
+              alert("Sorry Vehicle Donot have any Position by now");
+            } else {
+              setCenterPosition([
+                parseFloat(singlemarker.latitude),
+                parseFloat(singlemarker.longitude),
+              ]);
+            }
           }
         })
         .catch(function (error) {
@@ -169,49 +212,45 @@ function LeafletMap() {
 
   return (
     <>
-      <form className="mysearch">
-        <input
-          type="date"
-          className="form-control mydateinput mybord"
-          value={searchdata.startingDate}
-        />
-        <input
-          type="date"
-          className="form-control mydateinput"
-          value={searchdata.endingDate}
-        />
-        <input
-          className="form-control searchinput"
-          type="search"
-          placeholder="Search for Vehicle"
-          aria-label="Search"
-        />
-        <button className="btn searchbtn" type="submit">
-          <svg
-            width="2em"
-            height="1.2em"
-            viewBox="0 0 16 16"
-            class="bi bi-search"
-            fill="currentColor"
-            xmlns="http://www.w3.org/2000/svg"
+      {markings && (
+        <form className="mysearch shadow-lg">
+          <input
+            type="date"
+            id="startingDate"
+            className="form-control mydateinput mybord no-border"
+            value={searchdata.startingDate}
+            onChange={handleChange}
+          />
+          <select
+            id="device"
+            className="form-select searchinput no-border"
+            value={searchdata.device}
+            onChange={handleChange}
           >
-            <path
-              fillRule="evenodd"
-              d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"
-            />
-            <path
-              fillRule="evenodd"
-              d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"
-            />
-          </svg>
-        </button>
-      </form>
+            <option>Select a Vehicle</option>
+            {markings.map((mark, index) => (
+              <option value={mark.fleetIMEINumber} key={mark.fleetIMEINumber}>
+                {mark.fleetName}
+              </option>
+            ))}
+          </select>
+
+          <input
+            type="submit"
+            value="Search"
+            name="Search"
+            className="searchbtn p-3"
+            onClick={handleSubmit}
+          />
+        </form>
+      )}
       <div id="map">
         <MapContainer
           center={center_position}
           zoom={13}
           scrollWheelZoom={false}
         >
+          <MyComponent centerr={center_position} />
           <TileLayer
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -236,13 +275,9 @@ function LeafletMap() {
             ))}
           {singlemarker && singlemarkerdata && (
             <div>
-              {/* <Polyline
-                positions={singlemarkerdata}
-                pathOptions={{ color: "green" }}
-              ></Polyline> */}
               <Antpath
                 positions={singlemarkerdata}
-                options={{ color: "blue", weight: 8 }}
+                options={{ color: "blue", weight: 6 }}
               />
               <Marker
                 position={singlemarkerdata[0]}
@@ -250,7 +285,11 @@ function LeafletMap() {
                 icon={selectIcon(singlemarker.fleetType)}
               >
                 <Tooltip>
-                  <div className="text-success">
+                  <div className="text-center">
+                    <h5 className="badge text-decoration-underline text-success">
+                      {singlemarker.fleetName}
+                    </h5>
+                    <br />
                     Starting Point : {singlemarkerdata[0][0]},
                     {singlemarkerdata[0][1]}
                   </div>
@@ -262,9 +301,15 @@ function LeafletMap() {
                 icon={selectIcon(singlemarker.fleetType)}
               >
                 <Tooltip>
-                  Ending Point :{" "}
-                  {singlemarkerdata[singlemarkerdata.length - 1][0]},
-                  {singlemarkerdata[singlemarkerdata.length - 1][1]}
+                  <div className="text-center">
+                    <h6 className="badge text-decoration-underline text-success">
+                      {singlemarker.fleetName}
+                    </h6>
+                    <br />
+                    Ending Point :{" "}
+                    {singlemarkerdata[singlemarkerdata.length - 1][0]},
+                    {singlemarkerdata[singlemarkerdata.length - 1][1]}
+                  </div>
                 </Tooltip>
               </Marker>
             </div>
@@ -279,7 +324,7 @@ function LeafletMap() {
               icon={selectIcon(singlemarkerdatanot.fleetType)}
             >
               <Tooltip permanent>
-                <div className="text-danger">
+                <div className="text-center">
                   Sorry No any data available for this vehicle !
                 </div>
               </Tooltip>
